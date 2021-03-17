@@ -59,6 +59,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             }
             if (this.props.isFetchingWithId && !prevProps.isFetchingWithId) {
                 // inserted part ↓↓↓↓↓↓
+                var t = this;
                 const axios = require('axios');
                 
                 var n = new URLSearchParams(window.location.search.slice(1)).get("sb3url");
