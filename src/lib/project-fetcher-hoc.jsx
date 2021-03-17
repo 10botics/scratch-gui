@@ -58,6 +58,24 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 storage.setAssetHost(this.props.assetHost);
             }
             if (this.props.isFetchingWithId && !prevProps.isFetchingWithId) {
+                // inserted part ↓↓↓↓↓↓
+                const axios = require('axios');
+                
+                var n = new URLSearchParams(window.location.search.slice(1)).get("sb3url");
+                n ? axios.get(n, {
+                    responseType: "arraybuffer"
+                })
+                .then(function (e) {
+                    return t.props.onFetchedProjectData(e.data, t.props.loadingState)
+                })
+                .then(function() {
+                        console.log("load from url:", n, " success!")
+                })
+                .catch(function (e) {
+                    alert("load project from url: ".concat(decodeURIComponent(n), " error!")), t.fetchProject(t.props.reduxProjectId, t.props.loadingState), console.warn("error", e)
+                }): 
+                // inserted part ↑↑↑↑↑↑
+                
                 this.fetchProject(this.props.reduxProjectId, this.props.loadingState);
             }
             if (this.props.isShowingProject && !prevProps.isShowingProject) {
