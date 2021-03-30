@@ -211,6 +211,9 @@ class VideoProvider {
         })
             .then(stream => {
                 this._video = document.createElement('video');
+                
+                var plnode = document.createAttribute("playsinline");
+                this._video.setAttributeNode(plnode);     // This is required for iPhone. Otherwise iphone camera won't start
 
                 // Use the new srcObject API, falling back to createObjectURL
                 try {
